@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QRBITES Café Menu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #f5d6b1, #f0e3c9);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .menu-card {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      border-radius: 25px;
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      color: #3c2f2f;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(-20px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    .menu-item {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .menu-item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .qty-btn {
+      background: linear-gradient(135deg, #b0855b, #d1a774);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .qty-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .total-section {
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .order-btn {
+      background: linear-gradient(135deg, #8b5e34, #d4a373);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 25px;
+      margin-top: 12px;
+      font-weight: 600;
+      transition: all 0.4s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: block;
+      width: 75%;
+      margin-left: auto;
+      margin-right: auto;
+      animation: popUp 0.8s ease;
+    }
+
+    .order-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      background: linear-gradient(135deg, #d4a373, #8b5e34);
+    }
+
+    @keyframes popUp {
+      from {opacity:0; transform: scale(0.9);}
+      to {opacity:1; transform: scale(1);}
+    }
+
+    .timing {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #5c4033;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .note {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 14px;
+      color: #4a3728;
+      text-align: center;
+      animation: fadeIn 2s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-card">
+    <!-- QR Code and Title -->
+    <div class="text-center mb-3">
+      <img
+        src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://qrbites.netlify.app"
+        alt="QR Code"
+        class="mx-auto mb-2 rounded-lg shadow-lg animate-pulse"
+      />
+      <h1 class="text-3xl font-bold tracking-wide text-yellow-700">QRBITES</h1>
+      <p class="text-sm text-gray-700 mt-1">Warm Café Menu</p>
+    </div>
+
+    <!-- Timing -->
+    <div class="timing">⏰ Timing: 9 AM to 10 PM</div>
+
+    <!-- Menu Items -->
+    <div id="menu">
+      <div class="menu-item">
+        <div class="flex items-center space-x-3">
+          <img src="/icons/chai.png" alt="Chai" class="w-8 h-8 rounded-md" />
+          <div>
+            <p class="font-semibold">Chai</p>
+            <p class="text-sm text-gray-600">₹10</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="qty-btn" onclick="updateQuantity('chai', -1)">−</button>
+          <span id="chai-qty">0</span>
+          <button class="qty-btn" onclick="updateQuantity('chai', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="flex items-center space-x-3">
+          <img src="/icons/coffee.png" alt="Coffee" class="w-8 h-8 rounded-md" />
+          <div>
+            <p class="font-semibold">Nestle Coffee</p>
+            <p class="text-sm text-gray-600">₹15</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="qty-btn" onclick="updateQuantity('coffee', -1)">−</button>
+          <span id="coffee-qty">0</span>
+          <button class="qty-btn" onclick="updateQuantity('coffee', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="flex items-center space-x-3">
+          <img src="/icons/s11728_masala_milk_isolated_on_white_bakground_-stylize_200__04a32f14-f22f-448b-8f23-21e0a1be05dd_2-photoroom-png-photoroom_11zon33BO3bZ.png" alt="Masala Doodh" class="w-8 h-8 rounded-md" />
+          <div>
+            <p class="font-semibold">Masala Doodh</p>
+            <p class="text-sm text-gray-600">₹20</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button class="qty-btn" onclick="updateQuantity('doodh', -1)">−</button>
+          <span id="doodh-qty">0</span>
+          <button class="qty-btn" onclick="updateQuantity('doodh', 1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total + Buttons -->
+    <div class="total-section">
+      <p class="text-lg font-semibold">Total: ₹<span id="total">0</span></p>
+
+      <button class="order-btn" onclick="shareLocation()">Share My Location</button>
+      <button class="order-btn" onclick="payNow()">Pay Now</button>
+    </div>
+
+    <!-- Customer Note -->
+    <div class="note">
+      🌟 Thank you for visiting <b>QRBITES</b>!  
+      Your happiness makes our chai warmer and our doodh sweeter.  
+      Come again soon! ☕❤️
+    </div>
+  </div>
+
+  <script>
+    const prices = { chai: 10, coffee: 15, doodh: 20 };
+    const quantities = { chai: 0, coffee: 0, doodh: 0 };
+
+    function updateQuantity(item, change) {
+      quantities[item] = Math.max(0, quantities[item] + change);
+      document.getElementById(`${item}-qty`).innerText = quantities[item];
+      updateTotal();
+    }
+
+    function updateTotal() {
+      let total = 0;
+      for (let item in quantities) total += quantities[item] * prices[item];
+      document.getElementById("total").innerText = total;
+    }
+
+    function payNow() {
+      let total = 0;
+      for (let item in quantities) total += quantities[item] * prices[item];
+      if(total <= 0){
+        alert("Please add item first!");
+        return;
+      }
+      const upiLink = `upi://pay?pa=9021070426-2@ybl&pn=QRBITES&am=${total}&cu=INR`;
+      window.open(upiLink, '_blank');
+    }
+
+    function shareLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const mapLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+          const waMsg = `Hello! I placed an order on QRBITES.%0ALocation: ${mapLink}`;
+          window.open(`https://wa.me/919021070426?text=${waMsg}`, '_blank');
+        }, function(err) {
+          alert("Please allow location to share.");
+        }, { enableHighAccuracy: true });
+      } else {
+        alert("Location not supported by your device/browser.");
+      }
+    }
+  </script>
+</body>
+</html>
